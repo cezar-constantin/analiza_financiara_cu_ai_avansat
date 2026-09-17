@@ -1,0 +1,70 @@
+{
+ "n": 120000,
+ "features": [
+  "currentRatio",
+  "cashRatio",
+  "equityRatio",
+  "debtToAssets",
+  "netMargin",
+  "roa",
+  "assetTurnover",
+  "receivablesToRevenue",
+  "inventoryToRevenue",
+  "revenueGrowth",
+  "debtChange",
+  "logAssets"
+ ],
+ "labels": [
+  "stoppedFiling",
+  "negativeEquity",
+  "twoYearLoss",
+  "equityWipe",
+  "composite"
+ ],
+ "lo": [
+  0.01841060258448124,
+  -0.04595286399126053,
+  -4.031952857971191,
+  0.005864417180418968,
+  -7.2213640213012695,
+  -1.3433234691619873,
+  0.010130584239959717,
+  0.0,
+  0.0,
+  -0.9432610869407654,
+  -0.723197877407074,
+  4.720273971557617
+ ],
+ "hi": [
+  106.48113250732422,
+  49.4428825378418,
+  0.9935804009437561,
+  4.996609210968018,
+  0.9217854142189026,
+  0.9831293821334839,
+  8.658617973327637,
+  20.600454330444336,
+  7.115188121795654,
+  23.862733840942383,
+  6.319231986999512,
+  7.781931400299072
+ ],
+ "layout": [
+  "u2 features n*12",
+  "u1 labelBits n",
+  "i2 caenDiv n",
+  "u1 band n",
+  "i4 cui n",
+  "u2 refPd n*5"
+ ],
+ "rates": {
+  "stoppedFiling": 0.08123333333333334,
+  "negativeEquity": 0.038525,
+  "twoYearLoss": 0.12624166666666667,
+  "equityWipe": 0.13305833333333333,
+  "composite": 0.1503
+ },
+ "population": 500483,
+ "featureYear": 2024,
+ "eventYear": 2025
+}

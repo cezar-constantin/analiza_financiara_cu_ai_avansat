@@ -1,0 +1,5 @@
+.DS_Store
+Thumbs.db
+*.part
+_app_bundle.tar.gz
+push-result.txt

@@ -1,0 +1,74 @@
+[
+ {
+  "cui": "2816464",
+  "name": "Dedeman SRL",
+  "note": {
+   "ro": "retail DIY, profil solid",
+   "en": "DIY retail, solid profile"
+  }
+ },
+ {
+  "cui": "22891860",
+  "name": "Lidl Discount SRL",
+  "note": {
+   "ro": "retail alimentar, creștere și profit ridicat",
+   "en": "food retail, high growth and profit"
+  }
+ },
+ {
+  "cui": "2864518",
+  "name": "Altex România SRL",
+  "note": {
+   "ro": "retail electronice, creștere accelerată și îndatorare",
+   "en": "electronics retail, fast growth and leverage"
+  }
+ },
+ {
+  "cui": "6719278",
+  "name": "Mega Image SRL",
+  "note": {
+   "ro": "retail alimentar, marje subțiri",
+   "en": "food retail, thin margins"
+  }
+ },
+ {
+  "cui": "17233051",
+  "name": "Auchan România SA",
+  "note": {
+   "ro": "retail alimentar, aproape de break-even",
+   "en": "food retail, close to break-even"
+  }
+ },
+ {
+  "cui": "11588780",
+  "name": "Carrefour România SA",
+  "note": {
+   "ro": "retail, pierdere în 2025",
+   "en": "retail, loss in 2025"
+  }
+ },
+ {
+  "cui": "11607939",
+  "name": "Profi Rom Food SRL",
+  "note": {
+   "ro": "retail, pierderi recurente, capitaluri erodate",
+   "en": "retail, recurring losses, eroded equity"
+  }
+ },
+ {
+  "cui": "14399840",
+  "name": "Dante International SA (eMAG)",
+  "note": {
+   "ro": "e-commerce, trecere pe pierdere",
+   "en": "e-commerce, turned to losses"
+  }
+ },
+ {
+  "cui": "18189442",
+  "name": "Bitdefender SRL",
+  "note": {
+   "ro": "software, doar 2023–2024 în index",
+   "en": "software, only 2023–2024 in the index"
+  }
+ }
+]

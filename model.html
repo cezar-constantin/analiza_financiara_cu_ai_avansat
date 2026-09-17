@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ro">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Laboratorul de model · nivel avansat</title>
+    <meta
+      name="description"
+      content="Antrenează în browser un model de probabilitate de default pe 120.000 de firme românești reale: definiția evenimentului, variabile, AUC, curba ROC, coeficienți și calibrare."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <nav class="card site-nav" id="site-nav" aria-label="Site"></nav>
+
+      <header class="hero card">
+        <div class="hero-copy">
+          <p class="eyebrow" data-i18n="m.eyebrow"></p>
+          <h1 class="compact" data-i18n="m.title"></h1>
+          <p class="hero-text" data-i18n="m.text"></p>
+        </div>
+        <div class="hero-badges">
+          <article class="metric-chip">
+            <span class="metric-label" data-i18n="m.label.rate"></span>
+            <strong id="hero-rate">—</strong>
+          </article>
+          <article class="metric-chip">
+            <span class="metric-label" data-i18n="m.auc"></span>
+            <strong id="hero-auc">—</strong>
+          </article>
+          <article class="metric-chip">
+            <span class="metric-label" data-i18n="hero.status"></span>
+            <strong id="hero-status" data-i18n="status.waiting"></strong>
+          </article>
+        </div>
+      </header>
+
+      <main id="workspace" aria-live="polite">
+        <section class="card panel-card">
+          <div class="empty-state"><strong data-i18n="m.eyebrow"></strong><p data-i18n="ent.loading"></p></div>
+        </section>
+      </main>
+
+      <section class="footer-panel-grid" id="site-footer"></section>
+    </div>
+
+    <div class="toast" id="toast" hidden></div>
+    <script type="module" src="./model.js"></script>
+  </body>
+</html>

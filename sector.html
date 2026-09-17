@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ro">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Percentile pe sector · nivel avansat</title>
+    <meta
+      name="description"
+      content="Unde stă fiecare rată a unei companii în distribuția reală a sectorului și a benzii de mărime, și cât din fiecare sector trece pragurile tale."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <nav class="card site-nav" id="site-nav" aria-label="Site"></nav>
+
+      <header class="hero card">
+        <div class="hero-copy">
+          <p class="eyebrow" data-i18n="s.eyebrow"></p>
+          <h1 class="compact" data-i18n="s.title"></h1>
+          <p class="hero-text" data-i18n="s.text"></p>
+        </div>
+        <div class="hero-badges">
+          <article class="metric-chip">
+            <span class="metric-label" data-i18n="hero.company"></span>
+            <strong id="hero-company">—</strong>
+          </article>
+          <article class="metric-chip">
+            <span class="metric-label" data-i18n="ent.sector"></span>
+            <strong id="hero-sector">—</strong>
+          </article>
+          <article class="metric-chip">
+            <span class="metric-label" data-i18n="s.n"></span>
+            <strong id="hero-n">—</strong>
+          </article>
+        </div>
+      </header>
+
+      <section class="card workspace-card entry-card">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker" data-i18n="ent.kicker"></p>
+            <h2 data-i18n="ent.title"></h2>
+          </div>
+          <span class="status-pill" id="entry-status" data-i18n="status.waiting"></span>
+        </div>
+        <div class="panel-subgrid two-up">
+          <label class="field-card" for="cui-input">
+            <span class="field-label" data-i18n="entry.cui.label"></span>
+            <div class="cui-row">
+              <input class="field-input" id="cui-input" type="text" inputmode="numeric" data-i18n-placeholder="entry.cui.placeholder" />
+              <button class="primary-button" id="cui-button" type="button" data-i18n="entry.cui.button"></button>
+            </div>
+            <small data-i18n="ent.help"></small>
+          </label>
+          <label class="field-card" for="demo-select">
+            <span class="field-label" data-i18n="entry.demo.label"></span>
+            <select class="field-input" id="demo-select"></select>
+          </label>
+        </div>
+      </section>
+
+      <main id="workspace" aria-live="polite">
+        <section class="card panel-card">
+          <div class="empty-state"><strong data-i18n="s.eyebrow"></strong><p data-i18n="m.apply.needCompany"></p></div>
+        </section>
+      </main>
+
+      <section class="footer-panel-grid" id="site-footer"></section>
+    </div>
+
+    <div class="toast" id="toast" hidden></div>
+    <script type="module" src="./sector.js"></script>
+  </body>
+</html>

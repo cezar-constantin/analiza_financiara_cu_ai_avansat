@@ -1,0 +1,15 @@
+{
+ "n": 147699,
+ "labels": [
+  "stoppedFiling",
+  "negativeEquity",
+  "twoYearLoss",
+  "equityWipe",
+  "composite"
+ ],
+ "revenueFloor": 1000000.0,
+ "layout": [
+  "i4 cui n (sorted)",
+  "u2 pd n*5"
+ ]
+}
