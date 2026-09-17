@@ -88,6 +88,24 @@ const RO = {
   "m.text":
     "Antrenezi un model de risc pe 120.000 de firme reale: variabile din 2024 plus dinamica 2023 → 2024, evenimentul observat în 2025. Nicio suprapunere între fereastra variabilelor și fereastra evenimentului — exact situația analistului care are situațiile până în anul t și decide pentru t+1.",
   "m.dataPill": "eșantion livrat: 120.000 de firme",
+  "m.def.kicker": "Referință",
+  "m.def.title": "Definițiile variabilelor",
+  "m.def.help":
+    "Aceleași rate ca la nivelul început, dar reperul nu mai este un prag din manual: este distribuția reală a celor 120.000 de firme din eșantion. Mediana și intervalul intercuartilic spun ce este normal în populație, nu ce ar fi bine.",
+  "m.def.window": "variabile din 2024 · eveniment în 2025",
+  "m.def.variable": "Variabilă și formulă",
+  "m.def.measures": "Ce măsoară",
+  "m.def.effect": "Efect așteptat",
+  "m.def.median": "Mediana eșantionului",
+  "m.def.winsor": "Interval de lucru (p1 – p99)",
+  "m.def.iqr": "p25 – p75",
+  "m.def.lowers": "mai mult → risc mai mic",
+  "m.def.raises": "mai mult → risc mai mare",
+  "m.def.neutral": "fără semn așteptat",
+  "m.def.note1":
+    "Coloana „Efect așteptat” este teoria, nu rezultatul: ea spune ce semn ar trebui să aibă coeficientul dacă modelul se comportă economic rezonabil. După antrenare, instrumentul compară semnul obținut cu această așteptare și marchează abaterile — de acolo vine avertismentul „semn contraintuitiv”.",
+  "m.def.note2":
+    "Două precizări care schimbă interpretarea. Datele publice nu împart datoriile pe scadență, deci la numitorul ratelor de lichiditate stau datoriile totale — aceeași ipoteză conservatoare ca la nivelul început, cu cursorul pe 100 %. Iar valorile sunt winsorizate la percentilele 1 și 99 calculate pe toată populația, ca o singură firmă cu o rată de 4.000 să nu dicteze coeficienții; intervalul de lucru din ultima coloană este exact acest decupaj.",
   "m.label.kicker": "Pasul 1",
   "m.label.title": "Constructorul de etichetă",
   "m.label.help":
@@ -320,6 +338,24 @@ const EN = {
   "m.text":
     "You train a risk model on 120,000 real companies: variables from 2024 plus 2023 → 2024 dynamics, the event observed in 2025. No overlap between the variable window and the event window — exactly the analyst's situation, holding statements up to year t and deciding for t+1.",
   "m.dataPill": "delivered sample: 120,000 companies",
+  "m.def.kicker": "Reference",
+  "m.def.title": "Variable definitions",
+  "m.def.help":
+    "The same ratios as at beginner level, but the reference is no longer a textbook threshold: it is the actual distribution of the 120,000 companies in the sample. The median and the interquartile range say what is normal in the population, not what would be good.",
+  "m.def.window": "variables from 2024 · event in 2025",
+  "m.def.variable": "Variable and formula",
+  "m.def.measures": "What it measures",
+  "m.def.effect": "Expected effect",
+  "m.def.median": "Sample median",
+  "m.def.winsor": "Working range (p1 – p99)",
+  "m.def.iqr": "p25 – p75",
+  "m.def.lowers": "more → lower risk",
+  "m.def.raises": "more → higher risk",
+  "m.def.neutral": "no expected sign",
+  "m.def.note1":
+    "The “expected effect” column is theory, not result: it states the sign the coefficient should carry if the model behaves in an economically sensible way. After training, the tool compares the sign obtained against this expectation and flags the deviations — that is where the “counter-intuitive sign” warning comes from.",
+  "m.def.note2":
+    "Two clarifications that change the reading. Public data does not split liabilities by maturity, so the denominator of the liquidity ratios is total liabilities — the same conservative assumption as at beginner level, with the slider at 100 %. And the values are winsorised at the 1st and 99th percentiles computed on the whole population, so that a single company with a ratio of 4,000 cannot dictate the coefficients; the working range in the last column is exactly that clipping.",
   "m.label.kicker": "Step 1",
   "m.label.title": "Label builder",
   "m.label.help":

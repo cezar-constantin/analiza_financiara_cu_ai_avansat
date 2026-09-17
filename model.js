@@ -29,6 +29,61 @@ const FEATURE_LABELS = {
 };
 const fLabel = (k) => FEATURE_LABELS[ro() ? "ro" : "en"][k] || k;
 
+
+// Definitions shown in the "Definițiile variabilelor" panel — same shape as the beginner tool's
+// "Rate financiare" table: name + formula line, what it measures, expected effect, population reference.
+const FEATURE_META = {
+  ro: {
+    currentRatio: ["Active circulante / Datorii totale", "Capacitatea de a acoperi datoriile cu activele care se transformă în bani într-un an."],
+    cashRatio: ["Numerar și conturi la bănci / Datorii totale", "Cât din datorii este acoperit chiar acum, fără să vinzi sau să încasezi nimic."],
+    equityRatio: ["Capitaluri proprii / Active totale", "Cât din activ este finanțat de acționari; perna care absoarbe pierderile."],
+    debtToAssets: ["Datorii totale / Active totale", "Gradul de îndatorare, complementul autonomiei financiare."],
+    netMargin: ["Profit net / Cifra de afaceri", "Cât rămâne din fiecare leu vândut, după toate costurile și impozitul."],
+    roa: ["Profit net / Active totale", "Randamentul activelor: cât produce fiecare leu investit în afacere."],
+    assetTurnover: ["Cifra de afaceri / Active totale", "Intensitatea de utilizare a activelor; separă comerțul de industria grea."],
+    receivablesToRevenue: ["Creanțe / Cifra de afaceri", "Cât din vânzări stă neîncasat; înmulțit cu 365 dă zilele de încasare."],
+    inventoryToRevenue: ["Stocuri / Cifra de afaceri", "Cât din vânzări stă în depozit; înmulțit cu 365 dă zilele de stoc."],
+    revenueGrowth: ["CA(2024) / CA(2023) − 1", "Dinamica activității în anul anterior evaluării."],
+    debtChange: ["(Datorii 2024 − Datorii 2023) / Active totale 2023", "Cât bilanț nou a fost finanțat din datorii într-un an."],
+    logAssets: ["log₁₀(Active totale)", "Mărimea firmei, pe scară logaritmică; controlează efectul de talie."],
+  },
+  en: {
+    currentRatio: ["Current assets / Total liabilities", "Ability to cover liabilities with assets that turn into cash within a year."],
+    cashRatio: ["Cash and bank accounts / Total liabilities", "How much of the debt is covered right now, selling and collecting nothing."],
+    equityRatio: ["Equity / Total assets", "How much of the asset base shareholders fund; the cushion that absorbs losses."],
+    debtToAssets: ["Total liabilities / Total assets", "Leverage — the complement of the equity ratio."],
+    netMargin: ["Net profit / Revenue", "What is left of every unit sold, after all costs and tax."],
+    roa: ["Net profit / Total assets", "Return on assets: what each unit invested in the business produces."],
+    assetTurnover: ["Revenue / Total assets", "How intensively assets are used; separates trade from heavy industry."],
+    receivablesToRevenue: ["Receivables / Revenue", "How much of sales is still uncollected; times 365 gives days receivable."],
+    inventoryToRevenue: ["Inventories / Revenue", "How much of sales sits in the warehouse; times 365 gives days inventory."],
+    revenueGrowth: ["Revenue(2024) / Revenue(2023) − 1", "Activity dynamics in the year before the assessment."],
+    debtChange: ["(Liabilities 2024 − Liabilities 2023) / Total assets 2023", "How much new balance sheet was funded by debt in one year."],
+    logAssets: ["log₁₀(Total assets)", "Company size on a logarithmic scale; controls for the size effect."],
+  },
+};
+const fFormula = (k) => FEATURE_META[ro() ? "ro" : "en"][k][0];
+const fMeaning = (k) => FEATURE_META[ro() ? "ro" : "en"][k][1];
+const PCT_FEATURES = ["equityRatio", "debtToAssets", "netMargin", "roa", "revenueGrowth", "debtChange"];
+const fmtFeat = (k, v) =>
+  !isNum(v) ? "—" : k === "logAssets" ? nf(v, 2) : PCT_FEATURES.includes(k) ? nf(100 * v, 1) + " %" : nf(v, 2);
+
+/** Population reference per feature, computed once from the delivered sample. */
+let featStats = null;
+function featureStats() {
+  if (featStats) return featStats;
+  const { meta, F } = state;
+  const nF = meta.features.length;
+  featStats = meta.features.map((k, j) => {
+    const col = new Float64Array(meta.n);
+    for (let i = 0; i < meta.n; i++) col[i] = F[i * nF + j];
+    col.sort();
+    const q = (p) => col[Math.min(meta.n - 1, Math.floor(p * meta.n))];
+    return { key: k, median: q(0.5), p25: q(0.25), p75: q(0.75), lo: meta.lo[j], hi: meta.hi[j] };
+  });
+  return featStats;
+}
+
 const state = {
   meta: null, F: null, labels: null, div: null, band: null, cui: null, refPd: null,
   label: 4, use: null, l2: 0.003, sector: 0, model: null, res: null, company: null, training: false,
@@ -262,7 +317,7 @@ function featurePanel() {
   const meta = state.meta;
   const boxes = meta.features
     .map(
-      (k, j) => `<label class="check-row"><input type="checkbox" data-feat="${j}"${state.use[j] ? " checked" : ""} /><span>${esc(fLabel(k))}</span></label>`
+      (k, j) => `<label class="check-row" style="align-items:flex-start"><input type="checkbox" data-feat="${j}"${state.use[j] ? " checked" : ""} /><span>${esc(fLabel(k))}<span class="formula">${esc(fFormula(k))}</span></span></label>`
     )
     .join("");
   const pairs = corrPairs();
@@ -277,6 +332,40 @@ function featurePanel() {
       </div></div>
     <div class="qual-grid">${boxes}</div>
     <p class="chart-caption">${warn}</p>
+  </section>`;
+}
+
+
+function definitionsPanel() {
+  const meta = state.meta;
+  const st = featureStats();
+  const rows = meta.features
+    .map((k, j) => {
+      const s2 = st[j];
+      const exp = EXPECTED_SIGN[k];
+      const effect =
+        exp === 0
+          ? `<span class="status-dot na">${esc(t("m.def.neutral"))}</span>`
+          : exp < 0
+            ? `<span class="status-dot good">${esc(t("m.def.lowers"))}</span>`
+            : `<span class="status-dot weak">${esc(t("m.def.raises"))}</span>`;
+      return `<tr>
+        <td>${esc(fLabel(k))}<span class="formula">${esc(fFormula(k))}</span></td>
+        <td><small>${esc(fMeaning(k))}</small></td>
+        <td>${effect}</td>
+        <td class="num">${esc(fmtFeat(k, s2.median))}<span class="formula">${esc(t("m.def.iqr"))}: ${esc(fmtFeat(k, s2.p25))} … ${esc(fmtFeat(k, s2.p75))}</span></td>
+        <td class="num">${esc(fmtFeat(k, s2.lo))} … ${esc(fmtFeat(k, s2.hi))}</td>
+      </tr>`;
+    })
+    .join("");
+  return `<section class="card panel-card">
+    <div class="section-heading"><div><p class="section-kicker">${esc(t("m.def.kicker"))}</p><h2>${esc(t("m.def.title"))}</h2><p class="chart-caption">${esc(t("m.def.help"))}</p></div>
+      <span class="status-pill">${esc(t("m.def.window"))}</span></div>
+    <div class="table-scroll"><table class="data-table ratio-table">
+      <thead><tr><th>${esc(t("m.def.variable"))}</th><th>${esc(t("m.def.measures"))}</th><th>${esc(t("m.def.effect"))}</th><th class="num">${esc(t("m.def.median"))}</th><th class="num">${esc(t("m.def.winsor"))}</th></tr></thead>
+      <tbody>${rows}</tbody></table></div>
+    <p class="chart-caption">${esc(t("m.def.note1"))}</p>
+    <p class="chart-caption">${esc(t("m.def.note2"))}</p>
   </section>`;
 }
 
@@ -424,7 +513,7 @@ function findCui(c) {
 }
 
 function render() {
-  $("workspace").innerHTML = labelPanel() + featurePanel() + trainPanel() + applyPanel();
+  $("workspace").innerHTML = labelPanel() + definitionsPanel() + featurePanel() + trainPanel() + applyPanel();
   applyStaticTranslations();
   $("hero-rate").textContent = nf(100 * state.meta.rates[state.meta.labels[state.label]], 2) + " %";
   $("hero-auc").textContent = state.res ? nf(state.res.aucHold, 3) : "—";
