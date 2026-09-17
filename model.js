@@ -317,7 +317,7 @@ function featurePanel() {
   const meta = state.meta;
   const boxes = meta.features
     .map(
-      (k, j) => `<label class="check-row" style="align-items:flex-start"><input type="checkbox" data-feat="${j}"${state.use[j] ? " checked" : ""} /><span>${esc(fLabel(k))}<span class="formula">${esc(fFormula(k))}</span></span></label>`
+      (k, j) => `<label class="check-row" style="align-items:flex-start"><input type="checkbox" data-feat="${j}"${state.use[j] ? " checked" : ""} /><span><strong style="font-weight:600;color:var(--ink)">${esc(fLabel(k))}</strong><span class="formula" style="display:block;color:var(--muted);font-size:0.76rem;margin-top:2px">${esc(fFormula(k))}</span></span></label>`
     )
     .join("");
   const pairs = corrPairs();
