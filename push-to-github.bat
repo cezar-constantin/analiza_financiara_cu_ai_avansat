@@ -43,10 +43,14 @@ echo.
 if "%EXITCODE%"=="0" (
   echo GATA. Push reusit.
   echo.
-  echo Mai ramane un singur pas, o singura data:
-  echo   GitHub ^> repo ^> Settings ^> Pages ^> Source = "GitHub Actions"
-  echo Apoi site-ul apare la:
+  echo Workflow-ul de GitHub Actions activeaza singur Pages si publica.
+  echo Dupa 1-2 minute, site-ul este la:
   echo   https://cezar-constantin.github.io/analiza_financiara_cu_ai_avansat/
+  echo.
+  echo Daca workflow-ul tot da eroare la pasul "Setup Pages", atunci
+  echo activeaza manual, o singura data:
+  echo   GitHub ^> repo ^> Settings ^> Pages ^> Source = "GitHub Actions"
+  echo si apoi Actions ^> ultimul run ^> "Re-run all jobs".
 ) else (
   echo Push-ul a esuat cu codul %EXITCODE%. Detalii in push-result.txt
 )
