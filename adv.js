@@ -61,7 +61,7 @@ const RO = {
     "Pentru orice CUI: în ce percentilă a sectorului și a benzii de mărime cade fiecare rată, cum s-a mișcat în trei ani și ce procent din fiecare sector trece pragurile tale.",
   "home.anom.title": "Laboratorul de anomalii",
   "home.anom.text":
-    "Patru lentile pe depunerile publice: verificări de plauzibilitate, discontinuitatea rezultatului la zero, testul Benford cu capcana lui metodologică și profile atipice în sector.",
+    "Două lentile pe depunerile publice: verificări de plauzibilitate cu frecvența lor în populație și profile atipice în interiorul sectorului, calculate pe 1,12 milioane de depuneri.",
   "home.open": "Deschide",
   "home.note.kicker": "Ce trebuie știut înainte",
   "home.note.title": "Trei avertismente onest formulate",
@@ -218,7 +218,7 @@ const RO = {
   "a.eyebrow": "Laboratorul de anomalii",
   "a.title": "Ce nu se vede în cifre",
   "a.text":
-    "Patru lentile pe 1,12 milioane de depuneri. Concluzia care contează nu este că datele sunt greșite — aritmetica lor e validată la depunere — ci că raportarea este un comportament, iar comportamentul lasă urme statistice.",
+    "Două lentile pe 1,12 milioane de depuneri. Prima verifică plauzibilitatea unei firme, dar întotdeauna alături de frecvența problemei în populație — fără ea, orice verificare produce alarme false. A doua caută firme a căror structură nu seamănă cu a vecinilor lor de sector.",
   "a.checks.kicker": "Lentila 1",
   "a.checks.title": "Plauzibilitate",
   "a.checks.help":
@@ -276,7 +276,7 @@ const RO = {
   "a.ben.trap.title": "Citește rezultatul înainte să-l crezi",
   "a.ben.trap":
     "Dacă ai filtrat pe o bandă de mărime cu toate câmpurile incluse, MAD-ul indică neconformitate. Nu ai găsit nimic: banda de mărime este definită prin cifra de afaceri, deci ai comprimat intervalul de valori al variabilei pe care apoi o testezi, iar testul Benford presupune valori întinse pe mai multe ordine de mărime. Trece pe „doar poziții de bilanț” și deviația dispare.",
-  "a.out.kicker": "Lentila 4",
+  "a.out.kicker": "Lentila 2",
   "a.out.title": "Profile atipice în sector",
   "a.out.help":
     "Distanță Mahalanobis robustă pe nouă structuri de bilanț și de rezultat, calculată în interiorul diviziunii CAEN, pentru firmele cu cifră de afaceri peste 10 mil. lei. Se afișează CUI-ul și dimensiunile devierii; numele apare doar dacă îl cauți tu.",
@@ -288,6 +288,7 @@ const RO = {
   "a.out.dims": "Dimensiunile devierii",
   "a.out.lookup": "Caută acest CUI",
   "a.out.noDiv": "Pentru diviziunea aceasta nu sunt suficiente firme mari ca să calculăm profile atipice.",
+  "a.anyIssue": "Firme cu cel puțin o problemă",
   "a.pop": "Populația analizată",
   "a.year": "Anul",
 };
@@ -313,7 +314,7 @@ const EN = {
     "For any tax ID: which percentile of its sector and size band each ratio falls into, how it moved over three years, and what share of each sector passes your thresholds.",
   "home.anom.title": "Anomaly lab",
   "home.anom.text":
-    "Four lenses on public filings: plausibility checks, the discontinuity of earnings at zero, the Benford test with its methodological trap, and atypical profiles within a sector.",
+    "Two lenses on public filings: plausibility checks with their frequency in the population, and atypical profiles inside a sector, computed over 1.12 million filings.",
   "home.open": "Open",
   "home.note.kicker": "Before you start",
   "home.note.title": "Three honest warnings",
@@ -466,7 +467,7 @@ const EN = {
   "a.eyebrow": "Anomaly lab",
   "a.title": "What the numbers do not show",
   "a.text":
-    "Four lenses on 1.12 million filings. The conclusion that matters is not that the data is wrong — its arithmetic is validated on submission — but that reporting is a behaviour, and behaviour leaves statistical traces.",
+    "Two lenses on 1.12 million filings. The first checks a company's plausibility, always next to how frequent the issue is in the population — without that, any check produces false alarms. The second looks for companies whose structure does not resemble their sector peers.",
   "a.checks.kicker": "Lens 1",
   "a.checks.title": "Plausibility",
   "a.checks.help":
@@ -524,7 +525,7 @@ const EN = {
   "a.ben.trap.title": "Read the result before believing it",
   "a.ben.trap":
     "If you filtered on a size band with all fields included, MAD indicates non-conformity. You have found nothing: the size band is defined by revenue, so you compressed the range of the very variable you are testing, and the Benford test assumes values spread over several orders of magnitude. Switch to “balance-sheet items only” and the deviation disappears.",
-  "a.out.kicker": "Lens 4",
+  "a.out.kicker": "Lens 2",
   "a.out.title": "Atypical profiles in a sector",
   "a.out.help":
     "Robust Mahalanobis distance over nine balance-sheet and income structures, computed inside the CAEN division, for companies with revenue above RON 10 million. The tax ID and the deviating dimensions are shown; the name appears only if you look it up yourself.",
@@ -536,6 +537,7 @@ const EN = {
   "a.out.dims": "Deviating dimensions",
   "a.out.lookup": "Look this one up",
   "a.out.noDiv": "This division does not have enough large companies to compute atypical profiles.",
+  "a.anyIssue": "Companies with at least one issue",
   "a.pop": "Population analysed",
   "a.year": "Year",
 };
@@ -989,6 +991,9 @@ export async function wireCompanyEntry(onLoad) {
   const status = (key, tone) => {
     const el = $("entry-status");
     if (!el) return;
+    // drop data-i18n first: applyStaticTranslations() runs on every re-render and would
+    // otherwise overwrite the status we just set with the initial "waiting" text
+    el.removeAttribute("data-i18n");
     el.textContent = typeof key === "string" && key.includes(" ") ? key : t(key);
     el.className = "status-pill" + (tone ? " " + tone : "");
   };

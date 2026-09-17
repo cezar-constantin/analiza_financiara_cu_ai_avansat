@@ -10,7 +10,7 @@ Live: https://cezar-constantin.github.io/analiza_financiara_cu_ai_avansat/
 |---|---|
 | `model.html` — laboratorul de model | Participantul alege definiția evenimentului de risc, alege variabilele și antrenează în browser o regresie logistică pe un eșantion de 120.000 de firme reale: AUC, curbă ROC, coeficienți cu avertisment de semn contraintuitiv, calibrare pe decile. Apoi aplică modelul pe o companie căutată după CUI, alături de un model neliniar de referință. |
 | `sector.html` — percentile pe sector | Pentru orice CUI: percentila fiecărei rate în diviziunea CAEN și banda de mărime, distribuția grupului de referință, migrația percentilelor pe trei ani și un explorator care arată ce procent din fiecare sector trece pragurile alese. |
-| `anomalii.html` — laboratorul de anomalii | Verificări de plauzibilitate cu frecvența lor în populație, discontinuitatea rezultatului net la zero (5,83× mai multe firme imediat peste zero decât imediat sub), testul Benford cu capcana lui metodologică, și profile atipice în sector (doar CUI, fără nume). |
+| `anomalii.html` — laboratorul de anomalii | Două lentile: verificări de plauzibilitate pe firma căutată, fiecare afișată alături de frecvența ei în populație și de explicația cea mai probabilă; și profile atipice în interiorul diviziunii CAEN, prin distanță Mahalanobis robustă (se afișează doar CUI-ul, numele apare doar la căutare explicită). |
 
 ## Date
 
@@ -21,7 +21,7 @@ Fișierele derivate din `data/` (6,6 MB în total) sunt precalculate cu scriptur
 | `train.bin.gz` + `train_meta.json` | eșantion de antrenare: 120.000 de firme × 12 variabile (cuantificate pe 16 biți) + 5 etichete + scorurile modelului de referință |
 | `refpd.bin.gz` + `refpd_meta.json` | PD-ul modelului de referință pentru 147.699 de firme cu cifră de afaceri peste 1 mil. lei, indexat după CUI |
 | `percentiles.json.gz` | 1.013 celule sector × bandă de mărime × an, 10 rate, 21 de percentile |
-| `anomalies.json.gz` | histograme ale rezultatului la zero (pe an, bandă și sector), distribuții Benford, verificări de plauzibilitate |
+| `anomalies.json.gz` | frecvențele verificărilor de plauzibilitate în populație; conține și agregate pentru histograma rezultatului la zero și pentru testul Benford, rămase din versiunea anterioară a instrumentului și nefolosite acum |
 | `outliers.json.gz` | cele mai atipice 25 de profile din fiecare diviziune CAEN cu suficiente firme mari |
 
 **Situațiile financiare pe companie** nu sunt duplicate în acest repo: aplicația citește indexul de CUI
